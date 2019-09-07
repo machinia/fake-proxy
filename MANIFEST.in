@@ -1,0 +1,12 @@
+include LICENSE
+include README.rst
+include MANIFEST.in
+include setup.cfg
+include setup.py
+
+recursive-include requirements *.txt
+graft fake_proxy
+
+recursive-exclude __pycache__ *
+global-exclude *.pyc *.pyo *.swp *.swo
+
