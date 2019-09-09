@@ -3,11 +3,11 @@ from bs4 import BeautifulSoup
 from fake_proxy.core.proxysource import ProxySource
 
 
-class FreeProxyList(ProxySource):
+class SocksProxy(ProxySource):
     metadata = {
-            'name': 'free-proxy-list.net',
-            'url': 'https://www.free-proxy-list.net/',
-            'type': ['https', 'http']
+            'name': 'socks-proxy.net',
+            'url': 'https://www.socks-proxy.net/',
+            'type': ['socks']
     }
 
     def __init__(self):
@@ -28,6 +28,6 @@ class FreeProxyList(ProxySource):
                 result['port'] = row[1].text
                 result['country_code'] = row[2].text
                 result['country'] = row[3].text
-                result['type'] = 'https' if row[6].text == 'yes' else 'http'
+                result['type'] = row[4].text
 
                 self.proxies.append(result)

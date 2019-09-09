@@ -5,9 +5,9 @@ from fake_proxy.core.proxysource import ProxySource
 
 class FreeProxyList(ProxySource):
     metadata = {
-            'name': 'free-proxy-list.net',
-            'url': 'https://www.free-proxy-list.net/',
-            'type': ['https', 'http']
+            'name': 'sslproxies.org',
+            'url': 'https://www.sslproxies.org/',
+            'type': ['https']
     }
 
     def __init__(self):
@@ -28,6 +28,6 @@ class FreeProxyList(ProxySource):
                 result['port'] = row[1].text
                 result['country_code'] = row[2].text
                 result['country'] = row[3].text
-                result['type'] = 'https' if row[6].text == 'yes' else 'http'
+                result['type'] = 'https'
 
                 self.proxies.append(result)
