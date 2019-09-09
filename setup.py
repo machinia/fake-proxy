@@ -40,7 +40,7 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 3.6',
     ],
-    keywords='',
+    keywords='proxy proxies rotate scrape',
     packages=find_packages(exclude=['contrib', 'docs', 'test']),
     install_requires=get_requirements('default.txt'),
     extras_require={},
