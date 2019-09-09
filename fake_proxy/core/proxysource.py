@@ -1,30 +1,38 @@
-import random
 from abc import ABC, abstractmethod
+from fake_proxy.core.exceptions import EmptyResultsException
+from fake_proxy.core.exceptions import ProxyTypeError
 
 
 class ProxySource(ABC):
     __METADATA_KEYS = ('name', 'url', 'type')
+    __REQUIRED_RESULT_KEYS = ('url', 'port', 'type')
     metadata = {}
-    proxies = []
+    proxies_by_type = {}
 
     def __init__(self):
+        self.proxies = []
         self.check_metadata(self.metadata)
         self._scrape()
+        for t in self.metadata['type']:
+            self.proxies_by_type[t] = []
+        for p in self.proxies:
+            self.proxies_by_type[p['type']].append(p)
 
     @abstractmethod
     def _scrape(self):
-        pass
+        """This method should implement the scrape from the url, and
+        fill the proxies list"""
 
-    def get(self, proxy_type=None):
-        if not isinstance(proxy_type, list):
-            proxy_type = [proxy_type]
+    def get(self, proxy_type):
+        if proxy_type not in self.metadata['type']:
+            raise ProxyTypeError('The source doesn\'t manage this type')
 
-        p = random.choice(self.proxies)
-        if not proxy_type or p.get('type') in proxy_type:
-            self.proxies.remove(p)
+        try:
+            p = self.proxies_by_type[proxy_type].pop()
             return p
-
-        return self.get(proxy_type)
+        except IndexError:
+            msg = 'The source doesn\'t have more {} proxies'.format(proxy_type)
+            raise EmptyResultsException(msg)
 
     @staticmethod
     def check_metadata(metadata):

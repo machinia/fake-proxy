@@ -1,9 +1,10 @@
 import os
 import re
 import ast
-import random
 import importlib.util
 from fake_proxy.core.proxysource import ProxySource
+from fake_proxy.core.exceptions import InvalidProxySource
+
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 DEFAULT_PATH = os.path.join(HERE, os.path.pardir, 'sources')
@@ -11,24 +12,24 @@ DEFAULT_PATH = os.path.join(HERE, os.path.pardir, 'sources')
 
 class ProxySourceManager(object):
     VALID_FILE_REGEX = r'(([a-zA-Z0-9]+)|-|_)+[^__]\.py'
-    instances = {}
 
     def __init__(self):
+        self.__source_info = {}
+        self.load()
+
+    def load(self):
+        """
+        Loads all the valid proxies found to memory
+        :return: Nothing
+        """
         path = os.getenv('PROXY_PATH', DEFAULT_PATH)
         if not os.path.isdir(path):
             raise AttributeError('Invalid path {}'.format(path))
 
-        self.proxies = {}
-        self.load(path)
-
-    def load(self, path):
-        """
-        Loads all the valid proxies found in the path received
-        :param path: string with the path to a folder where proxies are stored
-        :return: Nothing
-        """
-        self.proxies = {}
+        self.instances = {}
+        self.__source_info = {}
         self.proxies_per_type = {}
+
         for f in os.listdir(path):
             if not re.match(self.VALID_FILE_REGEX, f):
                 continue
@@ -40,15 +41,14 @@ class ProxySourceManager(object):
                 for k in sp.metadata.keys():
                     p[k] = sp.metadata[k]
                 p['instance'] = sp
-
-                self.proxies[sp.metadata['name']] = p
+                self.__source_info[sp.metadata['name']] = p
 
                 for k in sp.metadata['type']:
                     if k not in self.proxies_per_type:
                         self.proxies_per_type[k] = []
                     self.proxies_per_type[k].append(p['name'])
 
-            except (AttributeError, ImportError) as e:
+            except (AttributeError, ImportError, TypeError) as e:
                 print('Skipped {}: {}'.format(f, e))
                 continue
 
@@ -96,10 +96,28 @@ class ProxySourceManager(object):
         :param name: string with the proxy name
         : return: constructor of the desired class. None on error.
         """
-        sp = self.proxies.get(name)
+        sp = self.__source_info.get(name)
         if not sp:
-            return None
+            raise InvalidProxySource('The source doesn\'t exist')
 
         if name not in self.instances:
             self.instances[name] = sp.get('instance')()
         return self.instances[name]
+
+    def remove_source(self, source_name, proxy_type):
+        """
+        Safely removes a proxy source from the loaded modules for a particular
+        proxy type
+        :param source_name: string, proxy source name
+        :param proxy_type: string, proxy type from which to delete the source
+        :return: Nothing
+        """
+        if proxy_type not in self.proxies_per_type or \
+                source_name not in self.proxies_per_type[proxy_type]:
+            return
+
+        self.proxies_per_type[proxy_type].remove(source_name)
+        for k, v in self.proxies_per_type.items():
+            if source_name in v:
+                return
+        self.__source_info.pop(source_name)
