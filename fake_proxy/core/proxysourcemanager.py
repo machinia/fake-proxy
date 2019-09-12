@@ -55,7 +55,7 @@ class ProxySourceManager(object):
     def __load_proxy_from_file(self, filename):
         """
         Loads a proxy from a certain file. The file must contain
-        only one class, derived from BaseSpider
+        only one class, derived from ProxySource
         :param filename: string containing the path to the definition
         of a proxy
         :return: constructor of the class if it was properly loaded,
