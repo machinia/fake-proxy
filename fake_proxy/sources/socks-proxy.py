@@ -3,11 +3,11 @@ from bs4 import BeautifulSoup
 from fake_proxy.core.proxysource import ProxySource
 
 
-class SocksProxy(ProxySource):
+class SocksProxy(ProxySource):  # pragma: no cover
     metadata = {
             'name': 'socks-proxy.net',
             'url': 'https://www.socks-proxy.net/',
-            'type': ['socks']
+            'type': ['socks4']
     }
 
     def __init__(self):
@@ -28,6 +28,6 @@ class SocksProxy(ProxySource):
                 result['port'] = row[1].text
                 result['country_code'] = row[2].text
                 result['country'] = row[3].text
-                result['type'] = row[4].text
+                result['type'] = row[4].text.lower()
 
                 self.proxies.append(result)

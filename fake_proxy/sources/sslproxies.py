@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 from fake_proxy.core.proxysource import ProxySource
 
 
-class FreeProxyList(ProxySource):
+class SslProxies(ProxySource):  # pragma: no cover
     metadata = {
             'name': 'sslproxies.org',
             'url': 'https://www.sslproxies.org/',
