@@ -5,9 +5,9 @@ from test.sample_proxysources.sample_proxy_list import SAMPLE_PROXY_LIST
 
 class ValidMetadataSource(ProxySource):
     metadata = {
-            'name': 'valid_metadata',
-            'url': 'https://www.valid-url.com',
-            'type': ['http', 'https', 'socks4']
+        'name': 'valid_metadata',
+        'url': 'https://www.valid-url.com',
+        'type': ['http', 'https', 'socks4']
     }
 
     def __init__(self):

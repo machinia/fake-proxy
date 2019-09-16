@@ -130,8 +130,7 @@ class TestProxySourceManager(TestCase):
         correct_types = ValidMetadataSource.metadata.get('type')
 
         m = ProxySourceManager()
-        m.remove_source(
-            source_name='not_the_correct_name',
-            proxy_type='invalid_proxy_type')
+        m.remove_source(source_name='not_the_correct_name',
+                        proxy_type='invalid_proxy_type')
         for t in correct_types:
             self.assertEqual(len(m.proxies_per_type.get(t)), 1)

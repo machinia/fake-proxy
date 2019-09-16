@@ -5,9 +5,9 @@ from fake_proxy.core.proxysource import ProxySource
 
 class SocksProxy(ProxySource):  # pragma: no cover
     metadata = {
-            'name': 'socks-proxy.net',
-            'url': 'https://www.socks-proxy.net/',
-            'type': ['socks4']
+        'name': 'socks-proxy.net',
+        'url': 'https://www.socks-proxy.net/',
+        'type': ['socks4']
     }
 
     def __init__(self):

@@ -5,9 +5,9 @@ from fake_proxy.core.proxysource import ProxySource
 
 class SslProxies(ProxySource):  # pragma: no cover
     metadata = {
-            'name': 'sslproxies.org',
-            'url': 'https://www.sslproxies.org/',
-            'type': ['https']
+        'name': 'sslproxies.org',
+        'url': 'https://www.sslproxies.org/',
+        'type': ['https']
     }
 
     def __init__(self):

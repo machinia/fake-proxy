@@ -34,13 +34,15 @@ class TestApi(TestCase):
         data = [
             ('https', 82),
             ('http', 99),
-            ('socks4', 80)]
+            ('socks4', 80)
+        ]
 
         for t, amount in data:
             r = api.get_from_source(
                 source_name=source,
                 amount=1000,
-                proxy_type=t)
+                proxy_type=t
+            )
             self.assertEqual(len(r), amount)
             self.assertEqual(len(api.proxy_sources(t).get(t)), 0)
 
@@ -55,7 +57,8 @@ class TestApi(TestCase):
         r = api.get_from_source(
             source_name=source,
             amount=amount,
-            proxy_type=types)
+            proxy_type=types
+        )
         self.assertEqual(len(r), 261)
         self.assertEqual(len(api.proxy_sources()), 3)
         for t in types:
@@ -68,7 +71,8 @@ class TestApi(TestCase):
         data = [
             ('https', 82),
             ('http', 99),
-            ('socks4', 80)]
+            ('socks4', 80)
+        ]
 
         for t, amount in data:
             r = api.get(
@@ -82,7 +86,7 @@ class TestApi(TestCase):
         Test format_proxy_type method with invalid inputs
         """
         err_msgs = {
-            TypeError: 'Invalid proxy_type type',
+            TypeError: 'Invalid proxy_type type, must be a string or a list',
             ProxyTypeError: 'The library doesn\'t manage the required type. '
                             'Choose from [\'http\', \'https\', \'socks4\']'
         }

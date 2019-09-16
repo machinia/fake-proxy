@@ -5,9 +5,9 @@ from fake_proxy.core.proxysource import ProxySource
 
 class FreeProxyList(ProxySource):  # pragma: no cover
     metadata = {
-            'name': 'free-proxy-list.net',
-            'url': 'https://www.free-proxy-list.net/',
-            'type': ['https', 'http']
+        'name': 'free-proxy-list.net',
+        'url': 'https://www.free-proxy-list.net/',
+        'type': ['https', 'http']
     }
 
     def __init__(self):

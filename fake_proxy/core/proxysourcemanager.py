@@ -69,8 +69,7 @@ class ProxySourceManager(object):
             raise AttributeError('File can\'t contain more than one class')
         proxy_name = classes[0].name
 
-        spec = importlib.util.spec_from_file_location(
-            proxy_name, filename)
+        spec = importlib.util.spec_from_file_location(proxy_name, filename)
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
         self.__validate_module(module, proxy_name)

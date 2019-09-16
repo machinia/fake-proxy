@@ -45,9 +45,7 @@ def get(amount=1, proxy_type=[]):
                 continue
             source_name = random.choice(available_sources[p_type])
 
-            r = get_from_source(
-                source_name=source_name,
-                proxy_type=p_type)
+            r = get_from_source(source_name=source_name, proxy_type=p_type)
             results += r
         except IndexError:
             break
@@ -101,7 +99,7 @@ def format_proxy_type(proxy_type):
     elif proxy_type and isinstance(proxy_type, list):
         all(format_proxy_type(elem) for elem in proxy_type)
     elif proxy_type and not isinstance(proxy_type, list):
-        raise TypeError('Invalid proxy_type type')
+        raise TypeError('Invalid proxy_type type, must be a string or a list')
     else:
         proxy_type = list(m.proxies_per_type.keys())
     return proxy_type
