@@ -25,8 +25,6 @@ The main function is `get`, which receives 2 parameters:
     >>> fake_proxy.get(amount=3)
     [{'ip': '89.20.135.204', 'port': '10000', 'country_code': 'RU', 'country': 'Russian Federation', 'type': 'http'},
     {'ip': '165.22.154.157', 'port': '3128', 'country_code': 'US', 'country': 'United States', 'type': 'http'},
-    {'ip': '76.87.101.188', 'port': '38875', 'country_code': 'US', 'country': 'United States', 'type': 'http'},
-    {'ip': '36.67.93.211', 'port': '4145', 'country_code': 'ID', 'country': 'Indonesia', 'type': 'socks4'},
     {'ip': '62.182.206.19', 'port': '37715', 'country_code': 'RU', 'country': 'Russian Federation', 'type': 'http'}]
     >>> fake_proxy.get(proxy_type='https')
     [{'ip': '36.92.108.150', 'port': '3128', 'country_code': 'ID', 'country': 'Indonesia', 'type': 'https'}]
