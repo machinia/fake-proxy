@@ -20,7 +20,7 @@ long_description = read('README.rst')
 setup(
     name='fake-proxy',
 
-    version='0.1.0',
+    version='0.1.1',
 
     description='Library that finds public proxies',
     long_description=long_description,
